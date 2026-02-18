@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Lev Kids Care</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Nunito:wght@400;600;700&family=Quicksand:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --coral: #E8917A;
+  --coral-deep: #D4715A;
+  --sage: #8BAF9A;
+  --sage-light: #B5D4C2;
+  --cream: #FFF8F2;
+  --cream-warm: #FFF0E5;
+  --text-dark: #3A2E2A;
+  --text-medium: #6B5C56;
+  --white: #FFFFFF;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 24px;
+  -webkit-font-smoothing: antialiased;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-dark);
+  margin-bottom: 48px;
+}
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--coral-deep);
+}
+.logo-text span { color: var(--sage); }
+.illustration {
+  margin-bottom: 32px;
+}
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+  color: var(--text-dark);
+}
+h1 em { color: var(--coral); font-style: italic; }
+p {
+  font-size: 1.05rem;
+  color: var(--text-medium);
+  line-height: 1.7;
+  max-width: 450px;
+  margin-bottom: 32px;
+}
+.actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary {
+  background: var(--coral);
+  color: var(--white);
+  box-shadow: 0 6px 25px rgba(232, 145, 122, 0.35);
+}
+.btn-primary:hover {
+  background: var(--coral-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 145, 122, 0.45);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--sage);
+  border: 2px solid var(--sage-light);
+}
+.btn-secondary:hover {
+  background: var(--sage-light);
+}
+</style>
+</head>
+<body>
+  <a href="/" class="logo">
+    <svg viewBox="0 0 48 48" fill="none" width="44" height="44">
+      <path d="M24 42C24 42 4 28 4 16C4 10 8.5 5 14 5C18 5 21.5 7.5 24 11C26.5 7.5 30 5 34 5C39.5 5 44 10 44 16C44 28 24 42 24 42Z" fill="#E8917A" opacity="0.9"/>
+      <circle cx="24" cy="18" r="5" fill="#FFF8F2"/>
+      <path d="M17 30C17 25.5 20 22 24 22C28 22 31 25.5 31 30" stroke="#FFF8F2" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <path d="M36 10C36 10 40 6 42 8C44 10 40 14 40 14" stroke="#8BAF9A" stroke-width="2" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span class="logo-text">Lev <span>Kids</span> Care</span>
+  </a>
+
+  <div class="illustration">
+    <svg width="200" height="160" viewBox="0 0 200 160" fill="none">
+      <circle cx="100" cy="80" r="70" fill="#FFF0E5" opacity="0.6"/>
+      <!-- Sad teddy bear -->
+      <circle cx="100" cy="85" r="30" fill="#D4A574"/>
+      <circle cx="86" cy="68" r="12" fill="#D4A574"/>
+      <circle cx="114" cy="68" r="12" fill="#D4A574"/>
+      <circle cx="86" cy="68" r="7" fill="#C4956A"/>
+      <circle cx="114" cy="68" r="7" fill="#C4956A"/>
+      <circle cx="92" cy="80" r="3" fill="#3A2E2A"/>
+      <circle cx="108" cy="80" r="3" fill="#3A2E2A"/>
+      <ellipse cx="100" cy="88" rx="4" ry="3" fill="#3A2E2A"/>
+      <!-- Sad mouth -->
+      <path d="M92 95 C92 95 100 90 108 95" stroke="#3A2E2A" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <!-- Band-aid -->
+      <rect x="115" y="75" width="20" height="10" rx="3" fill="#F5E6A3" transform="rotate(15 125 80)"/>
+      <circle cx="120" cy="80" r="1" fill="#D4A574" transform="rotate(15 125 80)"/>
+      <circle cx="125" cy="80" r="1" fill="#D4A574" transform="rotate(15 125 80)"/>
+      <circle cx="130" cy="80" r="1" fill="#D4A574" transform="rotate(15 125 80)"/>
+      <!-- Question marks -->
+      <text x="55" y="50" font-family="Playfair Display,serif" font-size="24" fill="#C5B8D9" opacity="0.5">?</text>
+      <text x="140" y="40" font-family="Playfair Display,serif" font-size="18" fill="#A8D4E6" opacity="0.5">?</text>
+    </svg>
+  </div>
+
+  <h1>Oops! Page <em>Not Found</em></h1>
+  <p>It looks like this page wandered off. Don't worry — let's get you back to where the care is.</p>
+
+  <div class="actions">
+    <a href="/" class="btn btn-primary">Go Home</a>
+    <a href="/#schedule" class="btn btn-secondary">Book Appointment</a>
+  </div>
+</body>
+</html>
