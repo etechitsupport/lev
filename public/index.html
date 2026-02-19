@@ -1461,29 +1461,31 @@ section {
 
 /* Calendar */
 .calendar-grid {
-  margin-bottom: 16px;
+  max-width: 420px;
+  margin: 0 auto 16px;
 }
 
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .calendar-header h4 {
   font-family: 'DM Sans', sans-serif;
   font-weight: 700;
+  font-size: 0.92rem;
 }
 
 .calendar-nav {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .calendar-nav button {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: 1px solid var(--sage-light);
   background: transparent;
@@ -1492,7 +1494,7 @@ section {
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .calendar-nav button:hover {
@@ -1502,24 +1504,24 @@ section {
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  margin-bottom: 8px;
+  gap: 2px;
+  margin-bottom: 4px;
 }
 
 .calendar-weekdays span {
   text-align: center;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
   color: var(--text-light);
-  padding: 4px;
+  padding: 2px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 
 .calendar-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 2px;
 }
 
 .calendar-day {
@@ -1527,8 +1529,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  font-size: 0.82rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
