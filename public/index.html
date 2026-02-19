@@ -553,6 +553,12 @@ body {
   width: 100%;
   text-align: center;
   margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.hero-card-illustration svg {
+  max-width: 100%;
+  height: auto;
 }
 
 .floating-badge {
@@ -1473,8 +1479,8 @@ section {
   justify-content: center;
 }
 
-/* Stripe payment */
-.stripe-badge {
+/* Square payment */
+.square-badge {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1765,15 +1771,40 @@ section {
   .pricing-cards { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .visit-types { grid-template-columns: 1fr; }
-  .time-slots { grid-template-columns: repeat(3, 1fr); }
+  .time-slots { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .form-row { grid-template-columns: 1fr; }
-  .schedule-body { padding: 24px; }
+  .schedule-body { padding: 20px 16px; }
+  .schedule-container { padding: 0 4px; }
+  .schedule-card { border-radius: var(--radius-md); overflow: hidden; }
+  .schedule-steps { overflow: hidden; }
+  .schedule-step { padding: 14px 8px; font-size: 0.75rem; gap: 4px; }
+  .schedule-step span:not(.step-num) { display: none; }
+  .schedule-step .step-num { width: 26px; height: 26px; font-size: 0.75rem; }
+  .calendar-weekdays span { font-size: 0.65rem; padding: 4px 2px; letter-spacing: 0; }
+  .calendar-days { gap: 2px; }
+  .calendar-day { font-size: 0.8rem; border-radius: 8px; }
+  .time-slot { padding: 10px 8px; font-size: 0.8rem; }
+  .schedule-actions { flex-direction: column; gap: 10px; }
+  .schedule-actions .btn-primary,
+  .schedule-actions .btn-secondary { width: 100%; text-align: center; justify-content: center; }
+  .confirmation-summary { padding: 20px 16px; }
   .footer { padding: 48px 24px 28px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
   .hero-actions { flex-direction: column; align-items: stretch; }
-  .schedule-step span:not(.step-num) { display: none; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
+  .hipaa-notice { flex-direction: column; gap: 8px; }
+  .hipaa-notice svg { align-self: flex-start; }
+  .square-badge { flex-wrap: wrap; justify-content: center; text-align: center; }
+}
+
+@media (max-width: 400px) {
+  .schedule-body { padding: 16px 12px; }
+  .hero h1 { font-size: 1.9rem; }
+  .schedule-step { padding: 12px 4px; }
+  .time-slots { grid-template-columns: repeat(2, 1fr); }
+  .visit-type { padding: 16px; }
+  .calendar-weekdays span { font-size: 0.6rem; padding: 4px 1px; }
 }
 </style>
 </head>
@@ -2197,7 +2228,7 @@ section {
   <div class="section-header animate-on-scroll">
     <div class="section-label">Book Your Visit</div>
     <h2 class="section-title">Schedule an <em>Appointment</em></h2>
-    <p class="section-subtitle">Pick a time that works for your family. Secure, HIPAA-compliant scheduling with Stripe-powered billing.</p>
+    <p class="section-subtitle">Pick a time that works for your family. Secure, HIPAA-compliant scheduling with Square-powered billing.</p>
   </div>
 
   <div class="schedule-container animate-on-scroll">
@@ -2347,7 +2378,7 @@ section {
         <div class="hipaa-notice">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <div>
-            <strong>HIPAA Protected</strong> — All personal health information is encrypted in transit and at rest. We never share your data with third parties. Billing is processed securely through Stripe's HIPAA-compliant infrastructure.
+            <strong>HIPAA Protected</strong> — All personal health information is encrypted in transit and at rest. We never share your data with third parties. Billing is processed securely through Square's HIPAA-compliant infrastructure.
           </div>
         </div>
 
@@ -2392,7 +2423,7 @@ section {
         <div class="hipaa-notice">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
           <div>
-            <strong>Secure Payment via Stripe</strong> — Your payment is processed through Stripe's PCI-DSS Level 1 certified, HIPAA-compliant platform. Card details never touch our servers. A Stripe customer profile will be created for future billing convenience.
+            <strong>Secure Payment via Square</strong> — Your payment is processed through Square's PCI-DSS Level 1 certified, HIPAA-compliant platform. Card details never touch our servers. A Square customer profile will be created for future billing convenience.
           </div>
         </div>
 
@@ -2404,9 +2435,9 @@ section {
           </button>
         </div>
 
-        <div class="stripe-badge">
+        <div class="square-badge">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Powered by Stripe · HIPAA Compliant · PCI DSS Level 1
+          Powered by Square · HIPAA Compliant · PCI DSS Level 1
         </div>
       </div>
 
@@ -2414,8 +2445,8 @@ section {
       <div class="schedule-body" id="step-success" style="display:none;">
         <div class="payment-success">
           <div class="success-icon">✓</div>
-          <h3>Appointment Confirmed!</h3>
-          <p>We've sent a confirmation email with all the details. Our team is excited to meet your family. See you soon!</p>
+          <h3>Almost There!</h3>
+          <p>Your Square booking page has opened in a new tab. Complete your appointment and payment there — Square will send you a confirmation email once it's done!</p>
           <div style="margin-top:32px;">
             <a href="#" class="btn-primary" onclick="resetScheduler(); return false;">Book Another Appointment</a>
           </div>
@@ -2752,7 +2783,10 @@ function nextStep(step) {
   if (step === 2) renderCalendar();
 }
 
-// Stripe payment simulation
+// Square booking — redirects to Square Appointments with pre-filled context
+// Replace SQUARE_LOCATION_ID and SQUARE_BOOKING_URL with your Square account values
+const SQUARE_BOOKING_URL = 'https://squareup.com/appointments/book/YOUR_LOCATION_ID/YOUR_BOOKING_PAGE';
+
 function processPayment() {
   const btn = document.getElementById('pay-btn');
   btn.disabled = true;
@@ -2760,49 +2794,32 @@ function processPayment() {
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="spin" style="animation:spin-slow 1s linear infinite;">
       <path d="M12 2a10 10 0 0 1 10 10"/>
     </svg>
-    Processing Payment...
+    Opening Square Booking...
   `;
 
-  // Simulate Stripe API call
+  // Build Square Appointments URL with booking context as URL params
+  // Square Appointments accepts: name, email, phone, and custom notes in the URL
+  const params = new URLSearchParams({
+    name: booking.parentName,
+    email: booking.parentEmail,
+    phone: booking.parentPhone,
+    // Embed visit context in the notes/custom field
+    note: `${booking.visitType} | Patient: ${booking.childFirst} ${booking.childLast} | DOB: ${booking.childDob} | ${booking.date} at ${booking.time}${booking.notes ? ' | Notes: ' + booking.notes : ''}`
+  });
+
+  const squareUrl = `${SQUARE_BOOKING_URL}?${params.toString()}`;
+
+  // Open Square Appointments in a new tab so the user completes payment there
   setTimeout(() => {
-    // In production, this would call your backend:
-    // POST /api/create-stripe-customer
-    // POST /api/create-payment-intent
-    // with HIPAA-compliant data handling
+    window.open(squareUrl, '_blank', 'noopener,noreferrer');
 
-    console.log('📋 Stripe Customer Creation (HIPAA-Compliant):', {
-      customer: {
-        name: booking.parentName,
-        email: booking.parentEmail,
-        phone: booking.parentPhone,
-        metadata: {
-          patient_name: `${booking.childFirst} ${booking.childLast}`,
-          patient_dob: booking.childDob,
-          hipaa_consent: true,
-          practice: 'Lev Kids Care'
-        }
-      },
-      payment: {
-        amount: booking.price * 100, // cents
-        currency: 'usd',
-        description: `${booking.visitType} - ${booking.childFirst} ${booking.childLast}`,
-        metadata: {
-          visit_type: booking.visitType,
-          appointment_date: booking.date,
-          appointment_time: booking.time,
-          hipaa_compliant: true
-        }
-      }
-    });
-
-    // Show success
+    // Show the confirmation state
     for (let i = 1; i <= 4; i++) {
       document.getElementById(`step-${i}`).style.display = 'none';
     }
     document.getElementById('step-success').style.display = 'block';
-
     document.querySelectorAll('.schedule-step').forEach(s => s.classList.add('completed'));
-  }, 2500);
+  }, 800);
 }
 
 function resetScheduler() {
