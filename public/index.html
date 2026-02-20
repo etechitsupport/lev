@@ -1714,8 +1714,8 @@ section {
   justify-content: center;
 }
 
-/* Square payment */
-.square-badge {
+/* Stripe payment */
+.stripe-badge {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2514,7 +2514,7 @@ section {
           School & sports physicals
         </li>
       </ul>
-      <a href="#schedule" class="pricing-btn primary">Start Family Plan</a>
+      <a href="https://buy.stripe.com/YOUR_FAMILY_PLAN_PAYMENT_LINK" class="pricing-btn primary" target="_blank" rel="noopener noreferrer">Start Family Plan</a>
     </div>
 
     <!-- Premium -->
@@ -2553,7 +2553,7 @@ section {
           Sibling discount: 30% off
         </li>
       </ul>
-      <a href="#schedule" class="pricing-btn secondary">Get Premium</a>
+      <a href="https://buy.stripe.com/YOUR_PREMIUM_PLAN_PAYMENT_LINK" class="pricing-btn secondary" target="_blank" rel="noopener noreferrer">Get Premium</a>
     </div>
   </div>
 
@@ -2570,7 +2570,7 @@ section {
   <div class="section-header animate-on-scroll">
     <div class="section-label">Book Your Visit</div>
     <h2 class="section-title">Schedule an <em>Appointment</em></h2>
-    <p class="section-subtitle">Pick a time that works for your family. Secure, HIPAA-compliant scheduling with Square-powered billing.</p>
+    <p class="section-subtitle">Pick a time that works for your family. Secure, HIPAA-compliant scheduling with Stripe-powered billing.</p>
   </div>
 
   <div class="schedule-container animate-on-scroll">
@@ -2720,7 +2720,7 @@ section {
         <div class="hipaa-notice">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           <div>
-            <strong>HIPAA Protected</strong> — All personal health information is encrypted in transit and at rest. We never share your data with third parties. Billing is processed securely through Square's HIPAA-compliant infrastructure.
+            <strong>HIPAA Protected</strong> — All personal health information is encrypted in transit and at rest. We never share your data with third parties. Billing is processed securely through Stripe's HIPAA-compliant infrastructure.
           </div>
         </div>
 
@@ -2765,7 +2765,7 @@ section {
         <div class="hipaa-notice">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
           <div>
-            <strong>Secure Payment via Square</strong> — Your payment is processed through Square's PCI-DSS Level 1 certified, HIPAA-compliant platform. Card details never touch our servers. A Square customer profile will be created for future billing convenience.
+            <strong>Secure Payment via Stripe</strong> — Your payment is processed through Stripe's PCI-DSS Level 1 certified, HIPAA-compliant platform. Card details never touch our servers. A Stripe customer profile will be created for future billing convenience.
           </div>
         </div>
 
@@ -2777,18 +2777,18 @@ section {
           </button>
         </div>
 
-        <div class="square-badge">
+        <div class="stripe-badge">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Powered by Square · HIPAA Compliant · PCI DSS Level 1
+          Powered by Stripe · HIPAA Compliant · PCI DSS Level 1
         </div>
       </div>
 
-      <!-- Success State -->
+      <!-- Success State (shown when Stripe redirects back with ?booking=success) -->
       <div class="schedule-body" id="step-success" style="display:none;">
         <div class="payment-success">
           <div class="success-icon">✓</div>
-          <h3>Almost There!</h3>
-          <p>Your Square booking page has opened in a new tab. Complete your appointment and payment there — Square will send you a confirmation email once it's done!</p>
+          <h3>Booking Confirmed!</h3>
+          <p>Your payment was processed securely through Stripe. A confirmation email is on its way — we look forward to seeing you!</p>
           <div style="margin-top:32px;">
             <a href="#" class="btn-primary" onclick="resetScheduler(); return false;">Book Another Appointment</a>
           </div>
@@ -3125,43 +3125,39 @@ function nextStep(step) {
   if (step === 2) renderCalendar();
 }
 
-// Square booking — redirects to Square Appointments with pre-filled context
-// Replace SQUARE_LOCATION_ID and SQUARE_BOOKING_URL with your Square account values
-const SQUARE_BOOKING_URL = 'https://squareup.com/appointments/book/YOUR_LOCATION_ID/YOUR_BOOKING_PAGE';
+// Stripe Checkout — POSTs booking data to Cloudflare Pages Function which creates a Stripe session
+// Deploy functions/api/create-checkout.js (see README) and set STRIPE_SECRET_KEY in Cloudflare env vars
 
-function processPayment() {
+async function processPayment() {
   const btn = document.getElementById('pay-btn');
   btn.disabled = true;
   btn.innerHTML = `
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="spin" style="animation:spin-slow 1s linear infinite;">
       <path d="M12 2a10 10 0 0 1 10 10"/>
     </svg>
-    Opening Square Booking...
+    Connecting to Stripe...
   `;
 
-  // Build Square Appointments URL with booking context as URL params
-  // Square Appointments accepts: name, email, phone, and custom notes in the URL
-  const params = new URLSearchParams({
-    name: booking.parentName,
-    email: booking.parentEmail,
-    phone: booking.parentPhone,
-    // Embed visit context in the notes/custom field
-    note: `${booking.visitType} | Patient: ${booking.childFirst} ${booking.childLast} | DOB: ${booking.childDob} | ${booking.date} at ${booking.time}${booking.notes ? ' | Notes: ' + booking.notes : ''}`
-  });
+  try {
+    const response = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ booking })
+    });
 
-  const squareUrl = `${SQUARE_BOOKING_URL}?${params.toString()}`;
+    if (!response.ok) throw new Error('Checkout session creation failed');
 
-  // Open Square Appointments in a new tab so the user completes payment there
-  setTimeout(() => {
-    window.open(squareUrl, '_blank', 'noopener,noreferrer');
-
-    // Show the confirmation state
-    for (let i = 1; i <= 4; i++) {
-      document.getElementById(`step-${i}`).style.display = 'none';
-    }
-    document.getElementById('step-success').style.display = 'block';
-    document.querySelectorAll('.schedule-step').forEach(s => s.classList.add('completed'));
-  }, 800);
+    const { url } = await response.json();
+    // Redirect to Stripe Checkout — Stripe redirects back to /?booking=success on completion
+    window.location.href = url;
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Complete Booking
+    `;
+    alert('Unable to connect to payment processor. Please try again or call us at (954) 555-1234.');
+  }
 }
 
 function resetScheduler() {
@@ -3209,6 +3205,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // Init
 renderCalendar();
+
+// Show success state if Stripe redirected back after successful payment
+if (new URLSearchParams(window.location.search).get('booking') === 'success') {
+  document.getElementById('schedule').scrollIntoView({ behavior: 'smooth' });
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById(`step-${i}`);
+    if (el) el.style.display = 'none';
+  }
+  document.getElementById('step-success').style.display = 'block';
+  document.querySelectorAll('.schedule-step').forEach(s => s.classList.add('completed'));
+}
 </script>
 
 </body>
